@@ -2,49 +2,70 @@
 
 ## Use Case
 
-Defect Triaging Agent for quality engineering teams.
+**Usecase-06: Defect Triaging Agent**
 
-## Problem
+Classify and route defects automatically using a code companion tool already available in the developer's IDE or terminal.
 
-Manual defect triage is slow and inconsistent. Reviewers must read defect reports, search for similar issues, understand module ownership, estimate severity, and decide who should receive the issue. This process depends heavily on SME memory.
+## Problem Statement
 
-## PoC Goal
+Current defect triage is manual, slow, and dependent on SME knowledge. Reviewers must understand the defect, identify the likely component, remember team ownership, compare against previous incidents, judge severity, and write the routing recommendation. This creates delays and inconsistent outcomes.
 
-Use a code companion tool to automate the first triage pass directly inside the developer workspace.
+Building a separate LLM-backed service can solve part of the problem, but it introduces API key management, hosting effort, integration overhead, and runtime cost. The use case asks for a lighter PoC.
 
-The solution should classify and route defects using:
+## Proposed Solution
+
+Use the code companion as the triage agent.
+
+The companion reads repository-native context:
 
 - incoming defect report
-- repository/module structure
+- repository/module signals, when available
 - ownership map
-- severity rules
+- severity and priority rules
 - historical defect examples
-- saved reusable prompts
+- reusable prompt instructions
+- report template
 
-## Constraints
+It then produces a structured Markdown triage report that a human can review and paste into an issue tracker.
+
+## Explicit Constraints
 
 - No separate LLM API key.
-- No hosted backend service.
+- No hosted backend.
+- No vector database.
+- No dashboard dependency.
 - No runtime inference infrastructure.
-- No dashboard required.
-- Output should be a Markdown report or issue comment.
+- Final output is Markdown, suitable for an issue comment or repository report.
+- Final routing remains human-reviewed.
+
+## Expected Outputs
+
+The workflow produces:
+
+- Assessment Report
+- Recommendations
+- Risk Analysis
+- Coverage Summary
+- Triage and Routing Summary
+- Action Checklist
 
 ## Business Impact
 
 Expected impact:
 
 - reduce manual triage effort by 50 to 80 percent
-- speed up routing decisions
-- improve triage consistency
-- preserve SME knowledge in repository-native files
-- reduce operational overhead compared with custom AI services
+- accelerate routing decisions
+- improve consistency across defects
+- preserve SME knowledge in reusable repository files
+- avoid the cost and maintenance overhead of a custom triage service
 
 ## Success Criteria
 
 The PoC succeeds when a user can:
 
-1. paste or select a defect report
-2. run the saved prompt in a code companion
-3. get a structured assessment report
-4. see severity, priority, owner, rationale, risks, and next actions
-5. reuse the same workflow for another defect
+1. open the repository in a code companion
+2. select or paste an incoming defect
+3. run the reusable triage prompt
+4. receive severity, priority, owner, evidence, risk, missing information, and next actions
+5. review the recommendation before routing
+6. repeat the same process for another defect
