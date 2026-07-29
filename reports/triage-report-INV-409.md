@@ -32,6 +32,7 @@
 | Description | Concurrent users adding the last item trigger inconsistent availability. |
 | Logs | `stock_reservation conflict`, `retry_count=0`, race condition suspected. |
 | Ownership Map | Stock, reservation, quantity, and inventory behavior map to Commerce Core. |
+| Repo Source Context | Repo source context was not available in this PoC folder. |
 | Historical Match | ORD-917 has similar concurrent checkout and reservation conflict signals. |
 | Severity Rule | P1 High Trigger: blocked workflow or UAT/staging issue blocking release signoff; P2 applies if release-blocking status is not confirmed. |
 
@@ -52,6 +53,8 @@
 - `docs/ownership-map.md`
 - `docs/severity-rules.md`
 - `data/sample-defects.json`
+- Repo source context was not available in this PoC folder.
+- Ownership verified through inventory quantity mismatch, stock reservation conflict, final-item concurrency, and checkout blocking signals.
 
 **Likely Similar Defects:**
 

@@ -32,6 +32,7 @@
 | Description | Safari 17 fails after token validation call. |
 | Logs | `TypeError: crypto.subtle undefined during reset-token verify`. |
 | Ownership Map | Password reset, token, and auth behavior map to Identity Services. |
+| Repo Source Context | Repo source context was not available in this PoC folder. |
 | Historical Match | AUTH-640 contains similar Safari and `crypto.subtle undefined` signals. |
 | Severity Rule | P1 High Trigger: UAT issue blocking release signoff; blocked workflow. |
 
@@ -52,6 +53,8 @@
 - `docs/ownership-map.md`
 - `docs/severity-rules.md`
 - `data/sample-defects.json`
+- Repo source context was not available in this PoC folder.
+- Ownership verified through password reset, reset-token verification, Safari browser behavior, and auth/token signals.
 
 **Likely Similar Defects:**
 
