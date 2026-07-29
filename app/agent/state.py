@@ -25,6 +25,7 @@ class TriageState(TypedDict, total=False):
     category: str
     component: str
     root_cause: str
+    affected_area: str
     keywords: list[str]
 
     is_duplicate: bool
@@ -65,6 +66,7 @@ def default_triage_state(defect_id: str, title: str, description: str) -> Triage
         "category": "",
         "component": "",
         "root_cause": "",
+        "affected_area": "",
         "keywords": [],
         "is_duplicate": False,
         "is_regression": False,
