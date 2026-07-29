@@ -1,0 +1,18 @@
+[
+  {
+    "defect_id": "QE-101",
+    "title": "Checkout returns 500 after card authorisation",
+    "description": "Production checkout fails after the payment provider approves a card.",
+    "stack_trace": "PaymentGatewayError: timeout",
+    "status": "OPEN",
+    "component": "Payments"
+  },
+  {
+    "defect_id": "QE-102",
+    "title": "Search filters reset after refresh",
+    "description": "Selected filters are lost when the results page reloads.",
+    "stack_trace": "",
+    "status": "RESOLVED",
+    "component": "Search"
+  }
+]

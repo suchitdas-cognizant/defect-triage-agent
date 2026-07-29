@@ -1,0 +1,1 @@
+"""DefectTriageBot backend package."""
