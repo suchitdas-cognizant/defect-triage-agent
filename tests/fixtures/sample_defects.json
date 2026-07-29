@@ -1,0 +1,49 @@
+[
+  {
+    "scenario": "critical",
+    "defect_id": "SAMPLE-CRITICAL-001",
+    "title": "Production checkout deletes saved payment methods",
+    "description": "After a successful checkout, all saved payment methods disappear from the customer profile. The event is reproducible on production and causes permanent data loss.",
+    "stack_trace": "DataIntegrityError: payment_method rows deleted during checkout finalization",
+    "expected_severity": "CRITICAL",
+    "expected_priority": 1
+  },
+  {
+    "scenario": "low",
+    "defect_id": "SAMPLE-LOW-001",
+    "title": "Help icon is misaligned on profile page",
+    "description": "The small help icon sits two pixels below its label in the profile settings page. No user workflow is blocked.",
+    "stack_trace": "",
+    "expected_severity": "LOW",
+    "expected_priority": 4
+  },
+  {
+    "scenario": "duplicate",
+    "defect_id": "SAMPLE-DUPLICATE-001",
+    "title": "Mobile Safari login button does not respond to taps",
+    "description": "On an iPhone using Safari, users enter valid login credentials but tapping the Sign in button does not submit the form or send an authentication request.",
+    "stack_trace": "",
+    "expected_duplicate_of": "DEF-101",
+    "expected_is_duplicate": true
+  },
+  {
+    "scenario": "regression",
+    "defect_id": "SAMPLE-REGRESSION-001",
+    "title": "Checkout fails for carts over 10,000 dollars",
+    "description": "Customers cannot pay for orders when the cart total exceeds $10,000. Checkout terminates with an unhandled validation exception before payment is processed.",
+    "stack_trace": "ValidationError: total_amount must be below configured threshold",
+    "expected_regression_of": "DEF-050",
+    "expected_is_regression": true
+  },
+  {
+    "scenario": "multimodal",
+    "defect_id": "SAMPLE-MULTIMODAL-001",
+    "title": "Product image overlaps Add to Cart control on tablet",
+    "description": "On tablet-sized screens, the product gallery overlaps the Add to Cart control. A screenshot is included for visual analysis.",
+    "stack_trace": "",
+    "image_attachments": [
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL7nAAAAABJRU5ErkJggg=="
+    ],
+    "expected_has_image": true
+  }
+]

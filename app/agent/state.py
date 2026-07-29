@@ -14,6 +14,7 @@ class TriageState(TypedDict, total=False):
     """
 
     defect_id: str
+    raw_input: dict[str, Any]
     title: str
     description: str
     stack_trace: str
@@ -46,6 +47,7 @@ class TriageState(TypedDict, total=False):
     integration_results: dict[str, Any]
     latency_ms: int
     jira_key: str | None
+    status: str
 
 
 def default_triage_state(defect_id: str, title: str, description: str) -> TriageState:
@@ -53,6 +55,7 @@ def default_triage_state(defect_id: str, title: str, description: str) -> Triage
 
     return {
         "defect_id": defect_id,
+        "raw_input": {},
         "title": title,
         "description": description,
         "stack_trace": "",
@@ -80,4 +83,5 @@ def default_triage_state(defect_id: str, title: str, description: str) -> Triage
         "integration_results": {},
         "latency_ms": 0,
         "jira_key": None,
+        "status": "OPEN",
     }
