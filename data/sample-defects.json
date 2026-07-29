@@ -1,0 +1,60 @@
+{
+  "incoming_defects": [
+    {
+      "id": "PAY-1842",
+      "title": "Checkout payment fails after OTP confirmation",
+      "description": "Customers can enter card details and OTP, but after confirmation the checkout page shows a generic error. Orders are not created.",
+      "environment": "Production",
+      "area": "Payments",
+      "reporter": "Anika QA",
+      "logs": "POST /payment/authorize 502 gateway timeout. provider_ref missing. impact: multiple users."
+    },
+    {
+      "id": "AUTH-771",
+      "title": "Password reset link opens blank page on Safari",
+      "description": "Reset email is generated successfully. On Safari 17 the reset URL opens a blank screen after the token validation call.",
+      "environment": "UAT",
+      "area": "Identity",
+      "reporter": "Rahul QE",
+      "logs": "TypeError: crypto.subtle undefined during reset-token verify. No production impact yet."
+    },
+    {
+      "id": "INV-409",
+      "title": "Inventory quantity differs between cart and order summary",
+      "description": "When two users add the last item at the same time, cart still shows available while order summary blocks checkout.",
+      "environment": "Staging",
+      "area": "Inventory",
+      "reporter": "Meera QA",
+      "logs": "stock_reservation conflict. retry_count=0. race condition suspected."
+    }
+  ],
+  "historical_defects": [
+    {
+      "id": "PAY-1668",
+      "title": "Payment authorization timeout after OTP approval",
+      "component": "Payments",
+      "owner": "Payments Platform",
+      "priority": "P0",
+      "signals": ["502", "provider_ref missing", "checkout blocked"],
+      "resolution": "Added idempotency key and provider reference persistence."
+    },
+    {
+      "id": "AUTH-640",
+      "title": "Safari reset token screen fails during crypto validation",
+      "component": "Identity",
+      "owner": "Identity Services",
+      "priority": "P1",
+      "signals": ["blank page", "Safari", "crypto.subtle undefined"],
+      "resolution": "Moved validation to server route and added browser fallback."
+    },
+    {
+      "id": "ORD-917",
+      "title": "Race condition during final stock reservation",
+      "component": "Inventory",
+      "owner": "Commerce Core",
+      "priority": "P1",
+      "signals": ["concurrent checkout", "reservation conflict", "quantity mismatch"],
+      "resolution": "Introduced reservation retry and locking around final quantity check."
+    }
+  ]
+}

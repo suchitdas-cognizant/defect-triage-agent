@@ -1,68 +1,74 @@
-# DefectTriageBot
+# Defect Triaging Agent
 
-An AI-powered defect triage agent for the Quality Engineering hackathon. It
-turns a manual, SME-dependent 45-minute review into an explainable,
-human-controlled decision in under 10 seconds.
+This repository contains a one-day PoC for **Usecase-06: Defect Triaging Agent**.
 
-## Phase 0 status
+The solution runs inside a code companion tool such as Codex, Claude Code, or GitHub Copilot. It does not require a separate LLM API key, hosted backend, vector database, or runtime inference service.
 
-The project foundation is ready: a shared LangGraph state contract, deterministic
-Gemini structured-output client, structured logging, safe environment template,
-test bootstrap, fixture layout, and a React 18/Vite 5 dashboard starter.
+## Goal
 
-## Stack
+Reduce manual defect triage effort by using the code companion's repository access and reasoning to:
 
-- Backend: Python 3.11, LangGraph `StateGraph`, FastAPI, uvicorn
-- AI: Gemini 2.5 Flash through `langchain-google-genai`, structured output only
-- Knowledge base: Gemini `gemini-embedding-001` (3072 dimensions) with local ChromaDB
-- Frontend: React 18, Vite 5, Recharts
-- Persistence: SQLite for feedback and analytics
-- Best-effort integrations: Jira REST v3, Slack webhook, SMTP email, PagerDuty
+- read incoming defect reports
+- inspect repository/module context
+- compare against ownership and severity rules
+- identify likely component and owner
+- classify severity and priority
+- produce a repository-native Markdown triage report
 
-## Project layout
+## What This Repo Contains
 
 ```text
-app/                 Python backend, graph state, nodes, API, and adapters
-frontend/            React 18 + Vite 5 user interface
-scripts/             Reproducible local maintenance scripts
-tests/               Unit, integration, and fixture test suites
-data/                Safe local development data (not generated vector storage)
-docs/                Demo script and supporting documentation
+docs/
+  usecase-summary.md
+  ownership-map.md
+  severity-rules.md
+  demo-script.md
+
+prompts/
+  defect-triage-prompt.md
+
+templates/
+  triage-report-template.md
+
+reports/
+  triage-report-PAY-1842.md
+  triage-report-AUTH-771.md
+  triage-report-INV-409.md
+
+data/
+  sample-defects.json
+
+team/
+  member-1-usecase-and-submission.md
+  member-2-repo-and-ownership.md
+  member-3-rules-and-risk.md
+  member-4-prompt-and-template.md
+  member-5-demo-and-reports.md
 ```
 
-## Local setup
+## How To Use
 
-1. Create a Python 3.11 virtual environment and install `requirements.txt`.
-2. Copy `.env.example` to `.env` and set credentials locally. Never commit it.
-3. Install and run the client from `frontend/`:
+1. Open this repository in your code companion tool.
+2. Open `prompts/defect-triage-prompt.md`.
+3. Provide one defect from `data/sample-defects.json` or paste a new defect report.
+4. Ask the tool to inspect `docs/ownership-map.md`, `docs/severity-rules.md`, and repository context.
+5. Save the final output using `templates/triage-report-template.md` under `reports/`.
 
-```bash
-npm install
-npm run dev
-```
+## Expected Outputs
 
-The backend API and graph nodes are implemented in subsequent phases, following
-the order: state → tools → nodes → graph → API → frontend → tests.
+Each triage report must include:
 
-## Core rules
+- Assessment Report
+- Recommendations
+- Risk Analysis
+- Coverage Summary
+- Triage and Routing Summary
+- Action Checklist
 
-- One `TriageState` flows through the whole `StateGraph`.
-- Nodes return partial dictionaries only; they do not mutate shared state.
-- Every node adds an audit entry to `triage_notes`.
-- Nodes call external services only through `app/tools/` adapters.
-- Integrations log errors and return error dictionaries instead of raising.
-- Secrets are always environment variables.
+## Team Execution
 
-## Submission documents
+The folder `team/` contains ready-to-use prompts for five members working in parallel. Each member can run their prompt in a separate Codex/code companion session, then merge the outputs into this repository.
 
-- [Architecture](ARCHITECTURE.md)
-- [Build plan](PLAN.md)
-- [Prompt log](PROMPTS.md)
-- [Field mapping](FIELD_MAPPING.md)
-- [Demo video script](docs/demo-video-script.md)
+## Submission Story
 
-## Collaboration
-
-The shared GitHub repository is `suchitdas-cognizant/defect-triage-agent`.
-Each completed iteration is committed and pushed so the team can pull the same
-working baseline.
+This PoC proves that defect triage can be accelerated without standing up a custom AI service. The code companion uses local repo knowledge, saved prompts, historical defect examples, and rule-based validation to produce consistent, reviewable triage recommendations.

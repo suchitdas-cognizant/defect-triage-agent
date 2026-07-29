@@ -1,36 +1,31 @@
-# Prompt and refinement log
+# Prompt Log
 
-This record captures the significant build prompts and decisions for judging.
-No customer data, tokens, passwords, or API keys are stored here.
+This file records the prompt strategy used for the PoC.
 
-## 2026-07-29 — product brief
+## Master Prompt
 
-**Input:** Build `DefectTriageBot` for Quality Engineering: reduce manual,
-SME-dependent defect triage from roughly 45 minutes to under 10 seconds.
+The reusable master prompt lives at:
 
-**Decision:** Use a LangGraph `StateGraph` with one typed shared state, Gemini
-structured output for reasoning, a local Chroma knowledge base, and explicit
-human control before final assignment.
+`prompts/defect-triage-prompt.md`
 
-## 2026-07-29 — reliability constraints
+It instructs the code companion to:
 
-**Input:** Nodes must return partial state only, append audit notes, and never
-place external I/O directly in graph nodes.
+1. read the incoming defect
+2. inspect ownership and severity rules
+3. search repository context where relevant
+4. identify likely component and owner
+5. classify severity and priority
+6. validate the decision against rules
+7. produce a Markdown report
 
-**Decision:** Define reducer-backed lists in `TriageState` and reserve
-`app/tools/` for all LLM, vector-store, and integration calls. Adapters must
-return error dictionaries rather than raising workflow-breaking exceptions.
+## Prompt Design Rules
 
-## 2026-07-29 — duplicate behavior
+- Use only evidence from the defect, repository, ownership map, rules, and historical examples.
+- If evidence is missing, say what is missing.
+- Do not invent ticket IDs, owners, code paths, logs, or business impact.
+- Always produce a human-reviewable recommendation.
+- Keep the output repository-native Markdown.
 
-**Input:** Treat semantic similarity of 0.80 or greater as a match. A match in
-`RESOLVED`, `CLOSED`, or `DONE` must be treated as a regression.
+## Refinement Notes
 
-**Decision:** The graph conditionally routes active matches to
-`flag_duplicate`; resolved matches continue to LLM analysis as regressions.
-
-## Refinement policy
-
-Prompt changes are versioned here together with the reason, expected output
-schema, and validation result. Production prompts will request JSON matching
-Pydantic schemas only; free-form LLM text is not used for routing decisions.
+The original implementation direction included hosted services and external model calls. The current prompt strategy removes those dependencies and matches the use case requirement: a code companion workflow with no separate LLM API key or backend.
