@@ -8,21 +8,22 @@
 
 **Reporter:** Anika QA
 
-**Summary:** Customers can complete card entry and OTP confirmation, but checkout fails afterward with a generic error and no order is created. Logs show a 502 gateway timeout and missing `provider_ref`, with multiple users impacted.
+**Defect Summary:** Customers can complete card entry and OTP confirmation, but checkout fails afterward with a generic error and no order is created. Logs show a 502 gateway timeout and missing `provider_ref`, with multiple users impacted.
 
-## Recommendation
+**Human Review Required:** Yes
 
-**Severity:** Critical
+## Recommendations
 
-**Priority:** P0
-
-**Owning Component:** Payments
-
-**Owning Team:** Payments Platform
-
-**Confidence:** 88 percent
-
-**Recommended Routing:** Route immediately to Payments Platform for human-reviewed P0 escalation because production checkout is blocked after payment authorization.
+| Field | Recommendation |
+|---|---|
+| Severity | Critical |
+| Priority | P0 |
+| Owning Component | Payments |
+| Owning Team | Payments Platform |
+| Escalation Path | Payment Engineering Lead |
+| Suggested Labels | `payments`, `checkout`, `gateway-timeout`, `p0-candidate` |
+| Confidence | 88 percent |
+| Recommended Routing | Route immediately to Payments Platform for human-reviewed P0 escalation because production checkout is blocked after payment authorization. |
 
 ## Evidence
 
@@ -31,8 +32,8 @@
 | Title | Payment failure occurs after OTP confirmation in checkout. |
 | Description | Orders are not created after the failure. |
 | Logs | `POST /payment/authorize 502 gateway timeout` and `provider_ref missing`. |
-| Ownership Map | Payment, checkout, gateway, and OTP authorization map to Payments Platform. |
-| Repo Source Context | Repo source context was not available in this PoC folder. |
+| Repository Context | Repo source context was not available in this PoC folder. |
+| Ownership Map | Payment, checkout, gateway, OTP authorization, and provider reference signals map to Payments Platform. |
 | Historical Match | PAY-1668 has similar 502, provider reference, and checkout-blocked signals. |
 | Severity Rule | P0 Critical Trigger: production checkout blocked; payment authorization failure affecting multiple customers; order creation failure after successful payment. |
 
@@ -54,11 +55,10 @@
 - `docs/severity-rules.md`
 - `data/sample-defects.json`
 - Repo source context was not available in this PoC folder.
-- Ownership verified through payment, checkout, gateway timeout, OTP authorization, and missing provider reference signals.
 
 **Likely Similar Defects:**
 
-- PAY-1668: payment authorization timeout after OTP approval.
+- PAY-1668: payment authorization timeout after OTP approval; useful resolution pattern was provider reference persistence and idempotency handling.
 
 **Missing Information:**
 
@@ -70,19 +70,21 @@
 
 **Validation Notes:**
 
-- Severity and priority match the documented P0 triggers for production checkout block, payment authorization failure affecting multiple customers, and order creation failure after successful payment.
-- Confidence is high because title, description, logs, ownership map, and historical defect PAY-1668 align.
-- Confidence is limited below 95 percent until impacted user count, trace IDs, provider status, and payment/order state are confirmed.
-- Human review is required before final routing and escalation.
+- Severity and priority match: documented P0 triggers for production checkout block, payment authorization failure affecting multiple customers, and order creation failure after successful payment.
+- Owner maps to: Payments component in `docs/ownership-map.md`, owned by Payments Platform with Payment Engineering Lead escalation.
+- Confidence rationale: high confidence because title, description, logs, ownership map, and historical defect PAY-1668 align.
+- Human review: required before final routing and escalation because P0 escalation and payment/order state must be confirmed.
 
 ## Triage And Routing Summary
 
-PAY-1842 should be routed to Payments Platform as Critical/P0. The report matches documented P0 triggers for production checkout block and payment authorization failure affecting multiple customers. Add payment, checkout, gateway-timeout, and p0-candidate labels.
+PAY-1842 should be routed to Payments Platform as Critical/P0. The report matches documented P0 triggers for production checkout block and payment authorization failure affecting multiple customers. Add `payments`, `checkout`, `gateway-timeout`, and `p0-candidate` labels, then escalate to the Payment Engineering Lead after human review.
 
 ## Action Checklist
 
 - [ ] Confirm current failure rate and impacted customer count.
-- [ ] Attach trace IDs for failed `POST /payment/authorize` calls.
+- [ ] Confirm logs, timestamp, or trace ID.
+- [ ] Confirm impacted user count or scope.
+- [ ] Confirm workaround availability.
 - [ ] Assign to Payments Platform.
 - [ ] Add `payments`, `checkout`, `gateway-timeout`, and `p0-candidate` labels.
 - [ ] Escalate to Payment Engineering Lead.

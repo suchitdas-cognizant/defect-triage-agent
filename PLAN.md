@@ -1,20 +1,33 @@
-# Phase Plan
+# Phase Plan And Completion Status
+
+## Current Status
+
+Completed. The five-member parallel workstreams have been integrated into a lean Usecase-06 PoC repository.
+
+The final solution is a code companion defect triage workflow with:
+
+- no separate LLM API key
+- no hosted backend
+- no vector database
+- no dashboard dependency
+- repository-native Markdown triage reports
+- human-reviewed routing recommendations
 
 ## Phase 1: Scope Lock
 
-Duration: 30 to 45 minutes
+Status: Complete
 
 Goal: align the team around the actual use case.
 
-Decisions:
+Completed decisions:
 
 - Main solution is a code companion workflow.
-- No separate LLM API key.
-- No hosted backend.
-- No dashboard dependency.
+- No separate LLM API key is required.
+- No hosted backend is required.
+- No dashboard is required for the core PoC.
 - Output is Markdown triage evidence.
 
-Outputs:
+Completed outputs:
 
 - final problem statement
 - success criteria
@@ -23,73 +36,55 @@ Outputs:
 
 ## Phase 2: Knowledge Assets
 
-Duration: 1 to 2 hours
+Status: Complete
 
-Goal: create the local knowledge the code companion will reason over.
+Goal: create the local knowledge the code companion reasons over.
 
-Parallel work:
-
-- Member 1: use case summary and submission criteria
-- Member 2: ownership map and module context
-- Member 3: severity and risk rules
-- Member 4: defect samples and historical patterns
-- Member 5: demo script and judge-facing storyline
-
-Outputs:
+Completed outputs:
 
 - `docs/usecase-summary.md`
 - `docs/ownership-map.md`
 - `docs/severity-rules.md`
 - `data/sample-defects.json`
 - `docs/demo-script.md`
+- `docs/demo-runbook.md`
 
 ## Phase 3: Prompt Workflow
 
-Duration: 2 to 3 hours
+Status: Complete
 
 Goal: make the reusable triage workflow repeatable.
 
-Parallel work:
-
-- Member 1 validates expected report sections.
-- Member 2 adds repo search instructions.
-- Member 3 adds rule-based validation checks.
-- Member 4 owns the master prompt and report template.
-- Member 5 generates sample reports.
-
-Outputs:
+Completed outputs:
 
 - `prompts/defect-triage-prompt.md`
 - `templates/triage-report-template.md`
-- at least three sample reports in `reports/`
+- three sample reports in `reports/`
 
 ## Phase 4: Integration And Polish
 
-Duration: 1 to 2 hours
+Status: Complete
 
-Goal: make all artifacts tell the same story.
-
-Checks:
+Completed checks:
 
 - README matches the PDF use case.
 - Architecture has no hosted-service dependency.
 - Reports contain evidence, not unsupported claims.
+- Reports follow the final template.
 - Severity decisions map to documented rules.
 - Ownership decisions map to documented teams.
 
 ## Phase 5: Demo And Submission
 
-Duration: 1 hour
-
-Goal: prepare a clean walkthrough.
+Status: Ready
 
 Demo order:
 
 1. Open the repo.
 2. Show the use case summary.
-3. Open one defect.
-4. Run the master prompt.
-5. Show module/context lookup.
+3. Show ownership and severity rules.
+4. Open one defect from `data/sample-defects.json`.
+5. Show the master prompt.
 6. Show the generated triage report.
 7. Explain how the same prompt can be re-run for new defects.
 
@@ -100,4 +95,5 @@ Final deliverables:
 - sample defect data
 - sample reports
 - architecture and phase plan
-- demo script
+- demo script and runbook
+- submission checklist
