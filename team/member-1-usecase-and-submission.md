@@ -37,5 +37,3 @@ Acceptance criteria:
 - The wording matches the PDF use case.
 - The checklist names every expected output.
 - No unsupported product claims remain.
-
-Time box: 90 minutes.

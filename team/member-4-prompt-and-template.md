@@ -37,5 +37,3 @@ Acceptance criteria:
 - A new teammate can paste a defect into the prompt and get a usable report.
 - The report format is consistent.
 - The prompt matches the no-backend, no-API-key constraint.
-
-Time box: 90 minutes.

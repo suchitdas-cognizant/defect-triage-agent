@@ -32,5 +32,3 @@ Acceptance criteria:
 - The sample reports are consistent and professional.
 - The demo clearly shows repeatability across multiple defects.
 - The closing explains business impact and no-infrastructure advantage.
-
-Time box: 90 minutes.

@@ -31,5 +31,3 @@ Acceptance criteria:
 - P0/P1 escalation logic is clear.
 - Every report has a confidence level and missing information.
 - No report overclaims impact without evidence.
-
-Time box: 90 minutes.

@@ -36,5 +36,3 @@ Acceptance criteria:
 - Every component has owner, escalation path, labels, and routing signals.
 - Every sample report maps to the ownership map.
 - Missing repo source context is stated honestly if source files are not present.
-
-Time box: 90 minutes.
