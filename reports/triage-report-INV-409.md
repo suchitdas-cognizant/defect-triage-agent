@@ -20,9 +20,9 @@
 
 **Owning Team:** Commerce Core
 
-**Confidence:** 80 percent
+**Confidence:** 78 percent
 
-**Recommended Routing:** Route to Commerce Core as P1 because this is a checkout-adjacent inventory consistency issue that can block release if reproduced.
+**Recommended Routing:** Route to Commerce Core for human-reviewed P1 handling because this is a checkout-adjacent inventory consistency issue in staging that can block release if reproducible and release-bound.
 
 ## Evidence
 
@@ -33,16 +33,17 @@
 | Logs | `stock_reservation conflict`, `retry_count=0`, race condition suspected. |
 | Ownership Map | Stock, reservation, quantity, and inventory behavior map to Commerce Core. |
 | Historical Match | ORD-917 has similar concurrent checkout and reservation conflict signals. |
+| Severity Rule | P1 High Trigger: blocked workflow or UAT/staging issue blocking release signoff; P2 applies if release-blocking status is not confirmed. |
 
 ## Risk Analysis
 
 | Risk Area | Assessment |
 |---|---|
-| Customer Impact | Medium currently because the issue is in staging. |
-| Business Impact | High if released because checkout can be blocked. |
-| Data/Security Risk | Low security risk, medium data consistency risk. |
-| Release Risk | High because final inventory reservation is checkout-critical. |
-| Operational Risk | Medium due to potential oversell or false availability. |
+| Customer Impact | Medium potential impact; no production impact is stated because the issue is in staging. |
+| Business Impact | High if released because checkout can be blocked during final inventory reservation. |
+| Data/Security Risk | Low security risk, medium inventory consistency risk due to conflicting stock state. |
+| Release Risk | High if this staging path is part of release signoff; otherwise classify as P2 until release-blocking status is confirmed. |
+| Operational Risk | Medium due to possible false availability, checkout confusion, or oversell investigation if released. |
 
 ## Coverage Summary
 
@@ -61,15 +62,26 @@
 - Exact reproduction rate.
 - Whether retry behavior is expected.
 - Whether this appears in production telemetry.
+- Whether this staging defect blocks release signoff.
+- Whether a retry or manual reservation workaround exists.
+
+**Validation Notes:**
+
+- Severity and priority are validated as P1 only when the staging inventory reservation path is release-blocking or blocks a checkout-adjacent workflow required for signoff.
+- If release-blocking status is not confirmed, the documented P2 trigger for staging defects should be used until human review upgrades it.
+- Confidence is limited because reproduction rate, release-blocking status, production telemetry, and workaround availability are missing.
+- Human review is required before final routing and escalation.
 
 ## Triage And Routing Summary
 
-INV-409 should be routed to Commerce Core as High/P1. Although it is in staging, the defect affects a checkout-adjacent inventory reservation path and matches a known race-condition pattern. Add inventory, stock-reservation, race-condition, and release-risk labels.
+INV-409 should be routed to Commerce Core as High/P1 if the staging checkout-adjacent inventory reservation path is release-blocking. If not release-blocking, keep it as Medium/P2 until reproduction rate and workaround status are confirmed. Add inventory, stock-reservation, race-condition, and release-risk labels.
 
 ## Action Checklist
 
 - [ ] Confirm reproduction rate with two concurrent sessions.
 - [ ] Capture trace IDs for reservation conflict.
+- [ ] Confirm whether this blocks release signoff.
+- [ ] Confirm whether retry or manual reservation workaround exists.
 - [ ] Assign to Commerce Core.
 - [ ] Add `inventory`, `stock-reservation`, `race-condition`, and `release-risk` labels.
 - [ ] Ask owner to verify retry handling.

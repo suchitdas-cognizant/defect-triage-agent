@@ -22,7 +22,7 @@
 
 **Confidence:** 88 percent
 
-**Recommended Routing:** Route immediately to Payments Platform and treat as a P0 candidate because production checkout is blocked after payment authorization.
+**Recommended Routing:** Route immediately to Payments Platform for human-reviewed P0 escalation because production checkout is blocked after payment authorization.
 
 ## Evidence
 
@@ -33,6 +33,7 @@
 | Logs | `POST /payment/authorize 502 gateway timeout` and `provider_ref missing`. |
 | Ownership Map | Payment, checkout, gateway, and OTP authorization map to Payments Platform. |
 | Historical Match | PAY-1668 has similar 502, provider reference, and checkout-blocked signals. |
+| Severity Rule | P0 Critical Trigger: production checkout blocked; payment authorization failure affecting multiple customers; order creation failure after successful payment. |
 
 ## Risk Analysis
 
@@ -40,9 +41,9 @@
 |---|---|
 | Customer Impact | High, because multiple production users are affected. |
 | Business Impact | High, because checkout and order creation are blocked. |
-| Data/Security Risk | Medium, because payment state and order state may diverge. |
+| Data/Security Risk | Medium financial-state risk, because payment authorization is attempted but orders are not created; no security exposure is stated. |
 | Release Risk | High, because this is a critical production path. |
-| Operational Risk | High, because support may receive repeated payment failure reports. |
+| Operational Risk | High, because repeated production checkout failures require immediate owner escalation and support/monitoring follow-up. |
 
 ## Coverage Summary
 
@@ -62,6 +63,14 @@
 - Time window of failures.
 - Payment provider incident status.
 - Trace IDs for failed requests.
+- Whether any payment captures succeeded without order creation.
+
+**Validation Notes:**
+
+- Severity and priority match the documented P0 triggers for production checkout block, payment authorization failure affecting multiple customers, and order creation failure after successful payment.
+- Confidence is high because title, description, logs, ownership map, and historical defect PAY-1668 align.
+- Confidence is limited below 95 percent until impacted user count, trace IDs, provider status, and payment/order state are confirmed.
+- Human review is required before final routing and escalation.
 
 ## Triage And Routing Summary
 

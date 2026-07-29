@@ -33,6 +33,7 @@
 | Logs | <finding> |
 | Ownership Map | <finding> |
 | Historical Match | <finding> |
+| Severity Rule | <documented trigger that supports severity/priority> |
 
 ## Risk Analysis
 
@@ -57,6 +58,12 @@
 **Missing Information:**
 
 - <missing item or "None identified">
+
+**Validation Notes:**
+
+- Severity and priority match <documented trigger>.
+- Confidence is <high/medium/low> because <evidence strength and missing information>.
+- Human review is required before final routing.
 
 ## Triage And Routing Summary
 
