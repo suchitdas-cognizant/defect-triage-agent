@@ -1,15 +1,15 @@
 # Demo Script
 
-Target length: 3 minutes.
+Target length: 3 minutes. Use the pre-generated reports in `reports/` during the main demo so the walkthrough does not depend on live model latency.
 
-## 00:00-00:20 - Problem
+## 00:00-00:20 - Problem And Fit
 
-Show the repository and `docs/usecase-summary.md`.
+Show `README.md`.
 
 Say:
-"Manual defect triage depends on SME memory. This PoC uses a code companion to classify and route defects directly inside the repository, without a separate LLM API key or hosted backend."
+"This is a one-day PoC for Usecase-06: a defect triaging agent that runs inside a code companion. It classifies and routes defects from repository context, without a separate LLM API key, hosted backend, vector database, or dashboard."
 
-## 00:20-00:50 - Knowledge Setup
+## 00:20-00:50 - Repository Knowledge
 
 Show:
 
@@ -18,32 +18,30 @@ Show:
 - `data/sample-defects.json`
 
 Say:
-"The repository stores the local knowledge: ownership, severity rules, and historical examples. The code companion uses this context while triaging."
+"The repo stores the triage knowledge as plain files: component ownership, escalation paths, severity rules, sample incoming defects, and historical patterns. That makes the workflow portable and easy for teams to update."
 
-## 00:50-01:40 - Run The Workflow
+## 00:50-01:20 - Reusable Workflow
 
-Show `prompts/defect-triage-prompt.md`.
-
-Paste or select defect `PAY-1842`.
+Show `prompts/defect-triage-prompt.md` and `templates/triage-report-template.md`.
 
 Say:
-"The prompt asks the companion to inspect the defect, local rules, ownership map, and related repo context before producing a recommendation."
+"The prompt tells the code companion to inspect the defect, ownership map, severity rules, historical examples, and available repo paths. The template keeps every output consistent and issue-comment-ready."
 
-## 01:40-02:20 - Review Output
+## 01:20-02:05 - Primary Sample Output
 
 Show `reports/triage-report-PAY-1842.md`.
 
 Say:
-"The output includes assessment, recommendation, risk analysis, coverage summary, routing summary, and action checklist."
+"For PAY-1842, the report identifies a production checkout payment failure, routes it to Payments Platform, marks it Critical/P0, cites evidence from logs and historical defects, lists missing information, and keeps final escalation human-reviewed."
 
-## 02:20-02:45 - Repeatability
+## 02:05-02:35 - Repeatability
 
 Show `reports/triage-report-AUTH-771.md` and `reports/triage-report-INV-409.md`.
 
 Say:
-"The same workflow can be re-run for different defects, producing consistent routing decisions with documented evidence."
+"The same process repeats for different defects. AUTH-771 routes to Identity Services with Safari reset-token evidence, while INV-409 routes to Commerce Core with inventory reservation evidence. The format stays consistent across all three."
 
-## 02:45-03:00 - Close
+## 02:35-03:00 - Closing Summary
 
 Say:
-"This proves a faster, lower-overhead triage workflow: repository-native, repeatable, human-reviewed, and ready to paste into an issue tracker."
+"This PoC reduces manual triage effort by turning ownership rules, severity policy, defect text, and historical examples into a repeatable code-companion workflow. It avoids new infrastructure, produces Markdown ready for an issue tracker, and leaves the final routing decision with a human reviewer."
