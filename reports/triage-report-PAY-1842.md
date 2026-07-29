@@ -32,6 +32,7 @@
 | Description | Orders are not created after the failure. |
 | Logs | `POST /payment/authorize 502 gateway timeout` and `provider_ref missing`. |
 | Ownership Map | Payment, checkout, gateway, and OTP authorization map to Payments Platform. |
+| Repo Source Context | Repo source context was not available in this PoC folder. |
 | Historical Match | PAY-1668 has similar 502, provider reference, and checkout-blocked signals. |
 
 ## Risk Analysis
@@ -51,6 +52,8 @@
 - `docs/ownership-map.md`
 - `docs/severity-rules.md`
 - `data/sample-defects.json`
+- Repo source context was not available in this PoC folder.
+- Ownership verified through payment, checkout, gateway timeout, OTP authorization, and missing provider reference signals.
 
 **Likely Similar Defects:**
 
