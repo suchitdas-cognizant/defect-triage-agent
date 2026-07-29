@@ -18,7 +18,7 @@ Show:
 - `data/sample-defects.json`
 
 Say:
-"The repo stores the triage knowledge as plain files: component ownership, escalation paths, severity rules, sample incoming defects, and historical patterns. That makes the workflow portable and easy for teams to update."
+"The repo stores the triage knowledge as plain files: component ownership, escalation paths, severity rules, sample defects, and historical patterns. That makes the workflow portable and easy for teams to update."
 
 ## 00:50-01:20 - Reusable Workflow
 
