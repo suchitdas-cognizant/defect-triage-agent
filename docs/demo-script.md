@@ -1,47 +1,50 @@
 # Demo Script
 
-Target length: 3 minutes. Use the pre-generated reports in `reports/` during the main demo so the walkthrough does not depend on live model latency.
+Target length: 2 to 2.5 minutes. Use the local architecture image `C:\Users\2513929\Downloads\architecture 2.svg` for the video only; do not add it to the repository. Use the pre-generated reports in `reports/` so the walkthrough does not depend on live model latency.
 
-## 00:00-00:20 - Problem And Fit
+## 00:00-00:15 - Problem And Fit
 
 Show `README.md`.
 
 Say:
 "This is a one-day PoC for Usecase-06: a defect triaging agent that runs inside a code companion. It classifies and routes defects from repository context, without a separate LLM API key, hosted backend, vector database, or dashboard."
 
-## 00:20-00:50 - Repository Knowledge
+## 00:15-00:40 - Architecture
 
-Show:
-
-- `docs/ownership-map.md`
-- `docs/severity-rules.md`
-- `data/sample-defects.json`
+Show `C:\Users\2513929\Downloads\architecture 2.svg`.
 
 Say:
-"The repo stores the triage knowledge as plain files: component ownership, escalation paths, severity rules, sample defects, and historical patterns. That makes the workflow portable and easy for teams to update."
+"The architecture is intentionally lightweight. An incoming defect goes into the code companion prompt, the companion reads repository files as evidence, generates a Markdown triage report, and a human reviewer decides the final routing action."
 
-## 00:50-01:20 - Reusable Workflow
+## 00:40-01:05 - Repository Knowledge
+
+Show `docs/ownership-map.md`, `docs/severity-rules.md`, and `data/sample-defects.json`.
+
+Say:
+"The repo stores the triage knowledge as plain files: component ownership, escalation paths, severity rules, sample defects, and historical patterns. Teams can update this knowledge without changing infrastructure."
+
+## 01:05-01:25 - Reusable Workflow
 
 Show `prompts/defect-triage-prompt.md` and `templates/triage-report-template.md`.
 
 Say:
-"The prompt tells the code companion to inspect the defect, ownership map, severity rules, historical examples, and available repo paths. The template keeps every output consistent and issue-comment-ready."
+"The prompt defines the repeatable workflow, and the template keeps every output consistent: assessment, recommendation, evidence, risk, coverage, routing summary, and action checklist."
 
-## 01:20-02:05 - Primary Sample Output
+## 01:25-02:00 - Primary Sample Output
 
 Show `reports/triage-report-PAY-1842.md`.
 
 Say:
-"For PAY-1842, the report identifies a production checkout payment failure, routes it to Payments Platform, marks it Critical/P0, cites evidence from logs and historical defects, lists missing information, and keeps final escalation human-reviewed."
+"For PAY-1842, the report identifies a production checkout payment failure, routes it to Payments Platform, marks it Critical/P0, cites log and historical evidence, lists missing information, and keeps escalation human-reviewed."
 
-## 02:05-02:35 - Repeatability
+## 02:00-02:20 - Repeatability
 
 Show `reports/triage-report-AUTH-771.md` and `reports/triage-report-INV-409.md`.
 
 Say:
-"The same process repeats for different defects. AUTH-771 routes to Identity Services with Safari reset-token evidence, while INV-409 routes to Commerce Core with inventory reservation evidence. The format stays consistent across all three."
+"The same process repeats across components: AUTH-771 routes to Identity Services, and INV-409 routes to Commerce Core. The evidence and output format stay consistent."
 
-## 02:35-03:00 - Closing Summary
+## 02:20-02:30 - Closing Summary
 
 Say:
-"This PoC reduces manual triage effort by turning ownership rules, severity policy, defect text, and historical examples into a repeatable code-companion workflow. It avoids new infrastructure, produces Markdown ready for an issue tracker, and leaves the final routing decision with a human reviewer."
+"This PoC reduces manual triage effort with a repository-native, repeatable, human-reviewed workflow. It avoids new infrastructure and produces Markdown ready for an issue tracker."
